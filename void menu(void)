@@ -1,0 +1,179 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int i, contlivro=0, contestilo=0, somamedia=0;
+char menu, verifautor[999], veriftitulo[999], verifestilo[999];
+
+struct livro{
+	char titulo[50], autor[20], estilo[10];
+	int cod;
+	float preco;
+};
+
+struct livro vetlivro[50];
+
+void menuu(void)
+{
+		system("cls");
+		fflush(stdin);
+		puts("I - Para incluir um livro...");
+		puts("L - para listar o nome de todos os livro...");
+		puts("A - Para procurar livro por autor...");
+		puts("T - Para procurar livro por titulo...");
+		puts("E - Para saber a quantidade de livros por estilo...");
+		puts("M - Para calcular a media de preço de todos os livros...");
+		scanf("%c", &menu);
+}
+
+void casei(void)
+{
+	i = contlivro;
+	fflush(stdin);
+	system("cls");
+	puts("Digite o titulo do livro:");
+	gets(vetlivro[i].titulo);
+	fflush(stdin);
+	system("cls");
+	puts("Digite o autor do livro:");
+	gets(vetlivro[i].autor);
+	fflush(stdin);
+	system("cls");
+	puts("Digite o estilo do livro:");
+	gets(vetlivro[i].estilo);
+	fflush(stdin);
+	system("cls");
+	puts("Digite o codigo do livro:");
+	scanf("%d", &vetlivro[i].cod);
+	fflush(stdin);
+	system("cls");
+	puts("Digite o preco do livro:");
+	scanf("%f", &vetlivro[i].preco);
+	fflush(stdin);
+	system("cls");
+	contlivro++;
+}
+
+void casel(void)
+{
+	fflush(stdin);
+					system("cls");
+					for(i=0;i<contlivro;i++)
+					{
+						printf("Livro: %s | valor: %f\n", vetlivro[i].titulo, vetlivro[i].preco);
+					}
+					system("pause");
+}
+
+void casea(void)
+{
+	fflush(stdin);
+				system("cls");
+				puts("Digite o autor que deseja procurar:");
+				gets(verifautor);
+				system("cls");
+				for(i=0;i<contlivro;i++)
+				{
+					if(strcmp(verifautor, vetlivro[i].autor) == 0)
+					{
+						printf("Livro: %s | Autor: %s | Preco: %f\n", vetlivro[i].titulo, vetlivro[i].autor, vetlivro[i].preco);
+					}
+				}
+				system("pause");
+}
+
+void caset(void)
+{
+	fflush(stdin);
+				system("cls");
+				puts("Digite o titulo do do livro que deseja procurar:");
+				gets(veriftitulo);
+				system("cls");
+				for(i=0;i<contlivro;i++)
+				{
+					if(strcmp(veriftitulo, vetlivro[i].titulo) == 0)
+					{
+						printf("Livro: %s | Autor: %s | Preco: %f\n", vetlivro[i].titulo, vetlivro[i].autor, vetlivro[i].preco);
+					}
+				}
+				system("pause");
+}
+
+void casee(void)
+{
+	fflush(stdin);
+				system("cls");
+				puts("Digite o estilo que deseja pesquisar:");
+				gets(verifestilo);
+				system("cls");
+				for(i=0;i<contlivro;i++)
+				{
+					if(strcmp(verifestilo, vetlivro[i].estilo) == 0)
+					{
+						contestilo++;
+					}
+				}
+				if(contestilo > 0)
+				{
+					printf("O total de livros do estilo: %s e de: %d\n", verifestilo, contestilo);
+				}
+				else
+				{
+					printf("Não foi encontrada nenhum livro com o estilo %s\n", verifestilo);
+				}
+				contestilo=0;
+				system("pause");
+}
+
+void casem(void)
+{
+	for(i=0;i<contlivro;i++)
+						{
+							somamedia = vetlivro[i].preco + somamedia;
+						}
+						somamedia = somamedia / contlivro;
+						printf("Media %d", somamedia);
+						system("pause");
+						somamedia = 0;
+}
+
+main()
+{
+	for(;;)
+	{
+		menuu();
+		switch(menu)
+		{
+			case 'i':
+				{
+				casei();
+				break;
+				}
+			case 'l':
+				{
+				casel();
+				break;
+				}
+			case 'a':
+				{
+				casea();
+				break;
+				}
+			case 't':
+				{
+				caset();
+				break;
+				}
+			case 'e':
+				{
+				casee();
+				break;
+				}
+			case 'm':
+				{
+				casem();
+				break;
+				}
+		}
+	}
+}
