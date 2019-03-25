@@ -1,0 +1,203 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int i, j, clientescad=0, gerentescad=0, menuprincipal, clienteid, testador=0;
+int verificadorcpf;
+
+struct gerentes{
+	char nomeger[50], emailger[50];
+	int codigoger, filialger, telefoneger;
+};
+
+struct clientes{
+	char nomecli[999], enderecocli[999];
+	int cpfcli, telefonecli, gerentecli, contasclientes=0, clienteid;
+	int numerocontacli, saldocontacli, idcontacli;
+	};
+
+struct contas{
+	int numerocontacli, saldocontacli;
+};
+
+main()
+{
+	struct gerentes gerente[4];
+	struct clientes cliente[50];
+	struct contas conta[4];
+	
+	system("cls");
+	
+	for(;;)
+{
+	system("cls");
+	puts("-----------------------------------------------");
+	puts("1 - Cadastrar gerente...");
+	puts("2 - Cadastrar cliente...");
+	puts("3 - Cadastrar conta bancaria...");
+	puts("4 - Consultar todas as contas de uma pessoa...");
+	puts("5 - Consultar contas por gerente...");
+	puts("6 - Deposito...");
+	puts("7 - Saque...");
+	puts("8 - Transferências...");
+	puts("-----------------------------------------------");
+	printf("\n\n\n");
+	printf("Clientes cadastrados: %d\n", clientescad);
+	printf("Gerentes cadastrados: %d\n", gerentescad);
+	
+	scanf("%d", &menuprincipal);
+	
+	switch(menuprincipal)
+	{
+		case 1:
+			{
+				i=gerentescad;
+				system("cls");
+				fflush(stdin);
+				puts("Digite o nome do gerente:");
+				gets(gerente[i].nomeger);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o código do gerente:");
+				scanf("%d", &gerente[i].codigoger);
+				system("cls");
+				fflush(stdin);
+				puts("Digite a filial do gerente:");
+				scanf("%d", &gerente[i].filialger);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o telefone do gerente:");
+				scanf("%d", &gerente[i].telefoneger);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o email do gerente:");
+				gets(gerente[i].emailger);
+				gerentescad++;
+				break;
+			}//case 1	
+		case 2:
+			{
+				i=clientescad;
+				clienteid = i;
+				cliente[i].clienteid = clienteid;
+				system("cls");
+				fflush(stdin);
+				puts("Digite o nome do cliente:");
+				gets(cliente[i].nomecli);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o endereço do cliente:");
+				gets(cliente[i].enderecocli);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o CPF do cliente:");
+				scanf("%d", &cliente[i].cpfcli);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o telefone do cliente:");
+				scanf("%d", &cliente[i].telefonecli);
+				system("cls");
+				fflush(stdin);
+				puts("Digite o código do gerente do cliente:");
+				scanf("%d", &cliente[i].gerentecli);
+				for(j=0;j<gerentescad;j++)
+				{
+					if(cliente[i].gerentecli == gerente[j].codigoger)
+					{
+						cliente[i].clienteid = i;
+						system("cls");
+						puts("Cliente cadastrado com sucesso.");
+						clientescad++;
+						system("pause");
+						break;
+					}//if
+				}//for
+				break;
+			}//case 2
+			case 3: // CADASTRAR C.B
+				{
+					fflush(stdin);
+					system("cls");
+					puts("Digite o CPF do cliente:");
+					scanf("%d", &verificadorcpf);
+					for(j=0;j<clientescad;j++)
+					{
+						if(verificadorcpf == cliente[j].cpfcli)
+						{
+							testador = 1;
+							clienteid = j;
+						}//if
+					}//for
+					if(testador == 1) // CPF ENCONTRADO
+					{
+						if(cliente[clienteid].contasclientes < 4)
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Digite o numero da conta:");
+							scanf("%d", &cliente[clienteid].numerocontacli);
+							cliente[clienteid].idcontacli = cliente[clienteid].contasclientes;
+							system("cls");
+							fflush(stdin);
+							puts("Digite o saldo da conta:");
+							scanf("%d", &cliente[clienteid].saldocontacli);
+							system("cls");
+							fflush(stdin);
+							puts("Conta aberta com sucesso.");
+							system("pause");
+							cliente[clienteid].contasclientes++;
+							testador = 0;
+							break;
+						}//if
+						else
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Cliente já atingiu o maximo de contas disponiveis.");
+							system("pause");
+							break;
+						}//else
+					}//if
+					else
+					{
+						system("cls");
+						puts("CPF não foi encontrado em nossos registros, operação cancelada.");
+						system("pause");
+						break;
+					}//else
+					break;
+				}//case 3
+				case 4: // CONSULTAR CONTAS PELO CPF
+					{
+					fflush(stdin);
+					system("cls");
+					puts("Digite o CPF do cliente:");
+					scanf("%d", &verificadorcpf);
+					for(j=0;j<clientescad;j++)
+					{
+						if(verificadorcpf == cliente[j].cpfcli)
+						{
+							testador = 1;
+							clienteid = cliente[j].clienteid;
+						}//if
+					}//for
+					if(testador == 1)
+					{
+						for(j=0;j<cliente[clienteid].contasclientes;j++)
+						{
+							printf("Numero da conta: %d, saldo: R$%d.\n", cliente[clienteid].numerocontacli, cliente[clienteid].saldocontacli);
+						}//for
+						system("pause");
+						break;
+					}//if
+					else
+					{
+						puts("CPF não encontrado em nossos registros, operação cancelada.");
+						system("pause");
+						break;
+					}//else	
+					break;
+					}//case 4
+	}//switch
+} //for
+} //main
