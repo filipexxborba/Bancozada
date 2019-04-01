@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void calc(int vet[50], int tam)
+{
+	int i;
+	float media=0; 
+	int maior=0, menor;
+	
+	for(i=0;i<tam;i++)
+	{
+		media = media + vet[i];
+				if(vet[i] > maior)
+		{
+			maior = vet[i];
+		}
+		if(vet[i] < menor)
+		{
+			menor = vet[i];
+		}
+	}
+	system("cls");
+	media = media/tam;
+	printf("Media = %f, maior nota = %d, menor nota = %d", media, maior, menor);
+}
+
+main()
+{
+	int tam, i, vet[50], alunos;
+	puts("Digite a quantidade de alunos:");
+	scanf("%d", &alunos);
+	
+	for(i=0;i<alunos;i++)
+	{
+		system("cls");
+		fflush(stdin);
+		puts("Digite a nota desse aluno:");
+		scanf("%d", &vet[i]);
+	}
+	tam = alunos;
+	calc(vet, tam);
+}
