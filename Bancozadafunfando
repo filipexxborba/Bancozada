@@ -1,0 +1,579 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+
+int i, j, k, id;
+int menu_principal, menu_gerentes;
+int cont_gerentes=0, cont_clientes=0;
+int verificador_filial_gerente, verificador_cod_gerente, verificador_cpf_cliente;
+int verificador_gerente=0, verificador_cpf=0, verificador_conta=0, verificador_conta1=0, verificador_conta2=0;
+int id_gerente, id_cliente, numero_conta, id_conta, conta1, conta2, cliente1, cliente2;
+char verificador_numero_conta[50], verificador_numero_conta1[50], verificador_numero_conta2[50];
+float  valor_deposito, valor_saque, valor_transferencia;
+
+struct contas
+{
+char numero_conta_cliente[50];
+float saldo_conta;	
+};
+
+struct gerentes
+{
+char nome_gerente[50], email_gerente[50];
+int cod_gerente, filial_gerente, telefone_gerente;
+};
+
+struct clientes
+{
+char nome_cliente[50], endereco_cliente[50];
+int cpf_cliente, telefone_cliente, gerente_cliente, quant_cc=0;
+struct contas conta[4];
+};
+
+main()
+{
+	
+	struct gerentes gerente[4];
+	struct clientes cliente[50]; 
+	
+	for(;;)
+	{
+		system("cls");
+		fflush(stdin);
+		puts("--------------------------------------------");
+		puts("             BANCO DO FILIPEXXX");
+		puts("--------------------------------------------");
+		puts("");
+		puts("1 - Incluir gerentes...");
+		puts("2 - Incluir clientes...");
+		puts("3 - Incluir conta...");
+		puts("4 - Consultar contas cliente...");
+		puts("5 - Consultar contas por gerente...");
+		puts("6 - Fazer um deposito em uma conta...");
+		puts("7 - Fazer um saque em um conta...");
+		puts("8 - Fazer transferencias...");
+		puts("");
+		puts("---------------------------------------------");
+		puts("9 - CONSULTAR TODOS OS CLIENTES");
+		puts("--------------------------------------------");
+		printf("\nUsuarios cadastrados: (%d), Gerentes cadastrados (%d)\n", cont_clientes, cont_gerentes);
+		
+		scanf("%d", &menu_principal);
+		
+		switch(menu_principal)
+		{
+			case 1:
+				{
+					if(cont_gerentes < 4)
+					{
+						i = cont_gerentes;
+						system("cls");
+						fflush(stdin);
+						puts("Digite o nome do gerente:");
+						gets(gerente[i].nome_gerente);
+						system("cls");
+						fflush(stdin);
+						printf("Digite o código do gerente %s:\n", gerente[i].nome_gerente);
+						scanf("%d", &gerente[i].cod_gerente);
+						system("cls");
+						fflush(stdin);
+						printf("Digite a filial do gerente %s:\n", gerente[i].nome_gerente);
+						puts("1 - Foz do Iguacu, 2 - Toledo");
+						scanf("%d", &verificador_filial_gerente);
+						if(verificador_filial_gerente == 1)
+						{
+							gerente[i].filial_gerente = verificador_filial_gerente;
+							system("cls");
+							fflush(stdin);
+							printf("Digite o telefone do gerente %s:\n", gerente[i].nome_gerente);
+							scanf("%d", &gerente[i].telefone_gerente);
+							system("cls");
+							fflush(stdin);
+							printf("Digite o email do gerente %s:\n", gerente[i].nome_gerente);
+							gets(gerente[i].email_gerente);
+							system("cls");
+							fflush(stdin);
+							puts("Gerente cadastrado com sucesso!");
+							cont_gerentes++;
+							getch();
+							break;
+						}
+						if(verificador_filial_gerente == 2)
+						{
+							gerente[i].filial_gerente = verificador_filial_gerente;
+							system("cls");
+							fflush(stdin);
+							printf("Digite o telefone do gerente %s:\n", gerente[i].nome_gerente);
+							scanf("%d", &gerente[i].telefone_gerente);
+							system("cls");
+							fflush(stdin);
+							printf("Digite o email do gerente %s:\n", gerente[i].nome_gerente);
+							gets(gerente[i].email_gerente);
+							system("cls");
+							fflush(stdin);
+							puts("Gerente cadastrado com sucesso!");
+							getch();
+							cont_gerentes++;
+							break;
+						}
+						if(verificador_filial_gerente != 1 && verificador_filial_gerente != 2)
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Filial não cadastrada, processo finalizado.");
+							getch();
+							break;
+						}
+					}
+					else
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Limite de gerentes excedido, deseja consultar todos os gerentes?");
+						puts("1 - Sim, 2 - Nao");
+						scanf("%d", &menu_gerentes);
+						if(menu_gerentes == 1)
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Gerentes cadastrados:");
+							for(i=0;i<cont_gerentes;i++)
+							{
+								printf("Gerente: %s, código: %d\n", gerente[i].nome_gerente, gerente[i].cod_gerente);
+							}
+							getch();
+							break;
+						}
+						else
+						{
+							break;
+						}
+						if(menu_gerentes !=1 && menu_gerentes != 2)
+						{
+							system("cls");
+							puts("Opcao invalida, operacao finalizada.");
+							getch();
+							break;
+						}
+					}
+				}
+				
+			case 2:
+				{
+				id = cont_clientes;
+				system("cls");
+				fflush(stdin);
+				puts("Digite o nome do cliente:");
+				gets(cliente[id].nome_cliente);
+				system("cls");
+				fflush(stdin);
+				printf("Digite o endereco do cliente: %s\n", cliente[i].nome_cliente);
+				gets(cliente[id].endereco_cliente);
+				fflush(stdin);
+				system("cls");
+				printf("Digite o CPF do cliente: %s\n", cliente[i].nome_cliente);
+				scanf("%d", &cliente[id].cpf_cliente);
+				fflush(stdin);
+				system("cls");
+				printf("Digite o telefone do cliente: %s\n", cliente[i].nome_cliente);
+				scanf("%d", &cliente[id].telefone_cliente);
+				fflush(stdin);
+				system("cls");
+				printf("Digite o codigo do gerente do cliente: %s\n", cliente[i].nome_cliente);
+				puts("");
+				for(i=0;i<cont_gerentes;i++)
+				{
+					printf("Gerente: %s, codigo: %d\n", gerente[i].nome_gerente, gerente[i].cod_gerente);
+				}// PRINTAR TODOS OS GERENTES CADASTRADOS
+				puts("");
+				scanf("%d", &verificador_cod_gerente);
+				for(i=0;i<cont_gerentes;i++) // VERIFICADOR DE COD DE GERENTES
+				{
+					if(verificador_cod_gerente == gerente[i].cod_gerente)
+					{
+						verificador_gerente = 1;
+						id_gerente = i;
+					}
+				}
+				if(verificador_gerente == 1) //SE EXUSTIR O GERENTE
+				{
+					system("cls");
+					fflush(stdin);
+					puts("Cadastro finalizado com sucesso!");
+					cliente[id].gerente_cliente = id_gerente;
+					cliente[id].quant_cc = 0;
+					cont_clientes++;
+					verificador_gerente = 0;
+					getch();
+					break;
+				}
+				else // SE NÃO EXISTIR O GERENTE
+				{
+					fflush(stdin);
+					system("cls");
+					puts("Codigo de gerente nao encontrado, operacao cancelada.");
+					getch();
+					break;
+				}
+				}
+				
+			case 3:
+				{
+				system("cls");
+				fflush(stdin);
+				puts("Para iniciar o processo de cadastro de conta, digite o CPF do cliente:");
+				scanf("%d", &verificador_cpf_cliente);
+				for(i=0;i<cont_clientes;i++)
+				{
+					if(verificador_cpf_cliente == cliente[i].cpf_cliente)
+					{
+					verificador_cpf = 1;
+					id_cliente = i;	
+					}	
+				}
+				if(verificador_cpf == 1) // SE O CPF FOR VALIDO
+				{
+					if(cliente[id_cliente].quant_cc < 4)
+					{
+						system("cls");
+						numero_conta = cliente[id_cliente].quant_cc;
+						printf("Digite o numero da conta: \n");
+						printf("Beneficiado: %s, CPF: %d\n", cliente[id_cliente].nome_cliente, cliente[id_cliente].cpf_cliente);
+						fflush(stdin);
+						gets(cliente[id_cliente].conta[numero_conta].numero_conta_cliente);
+						system("cls");
+						fflush(stdin);
+						puts("Digite o saldo da conta:");
+						scanf("%f", &cliente[id_cliente].conta[numero_conta].saldo_conta);
+						system("cls");
+						fflush(stdin);
+						puts("Conta criada com sucesso!");
+						cliente[id_cliente].quant_cc++;
+						verificador_cpf = 0;
+						getch();
+						break;
+					}
+					else
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Cliente ja atingiu o limite de contas disponiveis, operacao cancelada.");
+						getch();
+						break;
+					}
+				}
+				else // SE NÃO EXISTIR NENHUM CPF
+				{
+					system("cls");
+					fflush(stdin);
+					printf("O CPF: %d nao esta cadastrado, operacao finalizada.", verificador_cpf_cliente);
+					getch();
+					break;
+				}
+				}//case 3
+				
+			case 4:
+				{
+				system("cls");
+				fflush(stdin);
+				puts("Para iniciar o processo de consulta, digite o CPF do cliente:");
+				scanf("%d", &verificador_cpf_cliente);
+				for(i=0;i<cont_clientes;i++)
+				{
+					if(verificador_cpf_cliente == cliente[i].cpf_cliente)
+					{
+					verificador_cpf = 1;
+					id_cliente = i;	
+					}	
+				}
+				if(verificador_cpf == 1) // SE O CPF FOR VALIDO
+				{
+					system("cls");
+					fflush(stdin);
+					printf("Contas cadastradas - Cliente: %s\n\n", cliente[id_cliente].nome_cliente);
+					for(i=0;i<cliente[id_cliente].quant_cc;i++)
+					{
+						printf("Conta: %s, saldo: %.2f\n", cliente[id_cliente].conta[i].numero_conta_cliente, cliente[id_cliente].conta[i].saldo_conta);
+					}
+					getch();
+					verificador_cpf = 0;
+					break;
+				}
+				else // SE NÃO EXISTIR NENHUM CPF
+				{
+					system("cls");
+					fflush(stdin);
+					printf("O CPF nao esta cadastrado, operacao finalizada.");
+					getch();
+					break;
+				}
+				}// case 4
+				
+			case 5:
+				{
+				system("cls");
+				fflush(stdin);
+				puts("Para iniciar o processo de busca, digite o codigo do gerente:");
+				puts("");
+				puts("Gerente cadastrados:");
+				for(i=0;i<cont_gerentes;i++)
+				{
+					printf("Gerente: %s, codigo: %d\n", gerente[i].nome_gerente, gerente[i].cod_gerente);
+				}
+				scanf("%d", &verificador_cod_gerente);
+				for(i=0;i<cont_gerentes;i++) // VERIFICADOR DE COD DE GERENTES
+				{
+					if(verificador_cod_gerente == gerente[i].cod_gerente)
+					{
+						verificador_gerente = 1;
+						id_gerente = i;
+					}
+				}
+				if(verificador_gerente == 1) //SE EXISTIR O GERENTE
+				{
+					system("cls");
+					fflush(stdin);
+					puts("Todas as contas cadastradas com esse gerente:");
+					puts("");
+					for(i=0;i<cont_clientes;i++)
+					{
+						if(cliente[i].gerente_cliente == id_gerente)
+						{
+							printf("Cliente: %s\n", cliente[i].nome_cliente);
+							for(j=0;j<cliente[i].quant_cc;j++)
+							{
+								printf("Conta: %s, saldo: %.2f\n", cliente[i].conta[j].numero_conta_cliente, cliente[i].conta[j].saldo_conta);
+							}
+						puts("");	
+						}
+					}
+					getch();
+					verificador_gerente = 0;
+					break;
+				}
+				else // SE NÃO EXISTIR O GERENTE
+				{
+					fflush(stdin);
+					system("cls");
+					puts("Codigo de gerente nao encontrado, operacao cancelada.");
+					getch();
+					break;
+				}
+				}// case 5
+				
+			case 6:
+				{
+					system("cls");
+					fflush(stdin);
+					puts("Para iniciar o processo de deposito, digite o numero da conta:");
+					gets(verificador_numero_conta);
+					for(i=0;i<cont_clientes;i++)
+					{
+						for(j=0;j<cliente[i].quant_cc;j++)
+						{
+							if(strcmp(verificador_numero_conta, cliente[i].conta[j].numero_conta_cliente) == 0)
+							{
+								verificador_conta = 1;
+								id_conta = j;
+								id_cliente = i;
+							}
+						}
+					}
+					if(verificador_conta == 1) // SE EXISTIR ESSA CONTA
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Digite o valor que deseja depositar:");
+						scanf("%f", &valor_deposito);
+						system("cls");
+						fflush(stdin);
+						printf("Beneficiado: %s, Conta: %s\n\n", cliente[id_cliente].nome_cliente, cliente[id_cliente].conta[id_conta].numero_conta_cliente);
+						printf("Saldo anterior: %.2f\n", cliente[id_cliente].conta[id_conta].saldo_conta);
+						cliente[id_cliente].conta[id_conta].saldo_conta = cliente[id_cliente].conta[id_conta].saldo_conta + valor_deposito;
+						printf("Valor de deposito: %.2f\n", valor_deposito);
+						printf("Saldo atual: %.2f\n", cliente[id_cliente].conta[id_conta].saldo_conta);
+						system("pause");
+						verificador_conta = 0;
+						break;
+					}
+					else // SE NÃO EXISTIR
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Conta nao cadastrada, operacao cancelada.");
+						getch();
+						break;	
+					}
+				}// case 6
+				
+			case 7:
+				{
+				system("cls");
+				fflush(stdin);
+				puts("Para iniciar o processo de saque, digite o numero da conta:");
+				gets(verificador_numero_conta);
+					for(i=0;i<cont_clientes;i++)
+					{
+						for(j=0;j<cliente[i].quant_cc;j++)
+						{
+							if(strcmp(verificador_numero_conta, cliente[i].conta[j].numero_conta_cliente) == 0)
+							{
+								verificador_conta = 1;
+								id_conta = j;
+								id_cliente = i;
+							}
+						}
+					}
+					if(verificador_conta == 1) // SE EXISTIR ESSA CONTA
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Digite o valor que deseja sacar:");
+						scanf("%f", &valor_saque);
+						system("cls");
+						fflush(stdin);
+						if(cliente[id_cliente].conta[id_conta].saldo_conta > valor_saque) // SE HOUVER DINHEIRO
+						{
+							system("cls");
+							fflush(stdin);
+							printf("Cliente: %s, Conta: %s\n\n", cliente[id_cliente].nome_cliente, cliente[id_cliente].conta[id_conta].numero_conta_cliente);
+							printf("Saldo anterior: %.2f\n", cliente[id_cliente].conta[id_conta].saldo_conta);
+							cliente[id_cliente].conta[id_conta].saldo_conta = cliente[id_cliente].conta[id_conta].saldo_conta - valor_saque;
+							printf("Valor de saque: %.2f\n", valor_saque);
+							printf("Saldo atual: %.2f\n", cliente[id_cliente].conta[id_conta].saldo_conta);
+							system("pause");
+							verificador_conta = 0;
+							break;	
+						}
+						else // SE NÃO HOUVER DINHEIRO
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Nao há saldo suficiente, operacao finalizada.");
+							getch();
+							break;
+						}
+					}
+					else // SE NÃO EXISTIR
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Conta nao cadastrada, operacao cancelada.");
+						getch();
+						break;	
+					}
+				}// case 7
+				
+			case 8:
+				{
+				system("cls");
+				fflush(stdin);
+				puts("Digite o numero da conta do cliente:");
+				gets(verificador_numero_conta1);
+					for(i=0;i<cont_clientes;i++)
+					{
+						for(j=0;j<cliente[i].quant_cc;j++)
+						{
+							if(strcmp(verificador_numero_conta1, cliente[i].conta[j].numero_conta_cliente) == 0)
+							{
+								verificador_conta1 = 1;
+								conta1 = j;
+								cliente1 = i;
+							}
+						}
+					}
+					if(verificador_conta1 == 1) // SE EXISTIR ESSA CONTA
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Digite o valor que deseja transferir:");
+						scanf("%f", &valor_transferencia);
+						if(cliente[cliente1].conta[conta1].saldo_conta > valor_transferencia) // SE HOUVER DINHEIRO
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Digite a conta beneficiada:");
+							gets(verificador_numero_conta2);
+							for(i=0;i<cont_clientes;i++)
+							{
+								for(j=0;j<cliente[i].quant_cc;j++)
+								{
+									if(strcmp(verificador_numero_conta2, cliente[i].conta[j].numero_conta_cliente) == 0)
+									{
+										verificador_conta2 = 1;
+										conta2 = j;
+										cliente2 = i;
+									}
+								}
+							}
+							if(verificador_conta2 == 1)
+							{
+							system("cls");
+							fflush(stdin);
+							printf("Transferencia de conta: %s para conta: %s\n\n", cliente[cliente1].conta[conta1].numero_conta_cliente, cliente[cliente2].conta[conta2].numero_conta_cliente);
+							cliente[cliente1].conta[conta1].saldo_conta = cliente[cliente1].conta[conta1].saldo_conta - valor_transferencia;
+							printf("Novo saldo da conta %s = %.2f\n\n", cliente[cliente1].conta[conta1].numero_conta_cliente, cliente[cliente1].conta[conta1].saldo_conta);
+							cliente[cliente2].conta[conta2].saldo_conta = cliente[cliente2].conta[conta2].saldo_conta + valor_transferencia;
+							printf("Novo saldo da conta beneficiada %s = %.2f\n\n", cliente[cliente2].conta[conta2].numero_conta_cliente, cliente[cliente2].conta[conta2].saldo_conta);
+							puts("Transacao efetuada com sucesso!");
+							system("pause");
+							verificador_conta1 = 0;
+							verificador_conta2 = 0;
+							break;
+							
+							}
+							else
+							{
+							system("cls");
+							fflush(stdin);
+							puts("Conta nao cadastrada, operacao cancelada.");
+							getch();
+							break;	
+							}	
+						}
+						else // SE NÃO HOUVER DINHEIRO
+						{
+							system("cls");
+							fflush(stdin);
+							puts("Nao há saldo suficiente, operacao finalizada.");
+							getch();
+							break;
+						}
+					}
+					else // SE NÃO EXISTIR
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Conta nao cadastrada, operacao cancelada.");
+						getch();
+						break;	
+					}		
+				}// case 8
+				
+			case 9:
+				{
+					system("cls");
+					fflush(stdin);
+					if(cont_clientes > 0)
+					{
+						for(i=0;i<cont_clientes;i++)
+						{
+							printf("Cliente: %s, CPF: %d\n",cliente[i].nome_cliente, cliente[i].cpf_cliente);
+						}
+						getch();
+						break;
+					}
+					
+					else
+					{
+						system("cls");
+						fflush(stdin);
+						puts("Nenhum cliente cadastrado...");
+						getch();
+						break;
+					}
+				}
+		}
+	}
+}
